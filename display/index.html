@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+            --transition-duration: 600ms;
+        }
+
+        body {
+            background-color: #111;
+            color: #eee;
+            font-family: opendyslexic;
+            font-size: 1.5em;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+	h2 {
+	    text-align: center;
+	}
+
+        footer {
+            position: absolute;
+            bottom: 2rem;
+            left: 0;
+            width: 100vw;
+            font-size: 1.4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        footer>div {
+            margin-inline-end: .8em;
+            text-align: center;
+        }
+
+        footer svg {
+            transform: translateY(1rem);
+        }
+
+        .qr-code {
+            height: 6em;
+        }
+
+        .page {
+            position: absolute;
+            top: 2em;
+            left: 10vw;
+            width: 80vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            opacity: 0;
+            transition: opacity var(--transition-duration);
+        }
+
+        .page.show {
+            opacity: 1;
+            transition: opacity var(--transition-duration) linear var(--transition-duration);
+        }
+
+        .page>div {
+            text-align: center;
+            margin-block: 1em;
+        }
+
+        li {
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <footer>
+        <div style="justify-self:start;padding-inline:.8em;">0208 871 5080</div>
+        <div>kimberskatepark@gmail.com</div>
+        <div style="grid-column:span 2;">kimberskatepark.com</div>
+	<!--
+	<div>
+            <svg width="48px" height="48px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"
+                stroke="#eeeeee">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M15.5 5H9.5C7.29086 5 5.5 6.79086 5.5 9V15C5.5 17.2091 7.29086 19 9.5 19H15.5C17.7091 19 19.5 17.2091 19.5 15V9C19.5 6.79086 17.7091 5 15.5 5Z"
+                        stroke="#eeeeee" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12.5 15C10.8431 15 9.5 13.6569 9.5 12C9.5 10.3431 10.8431 9 12.5 9C14.1569 9 15.5 10.3431 15.5 12C15.5 12.7956 15.1839 13.5587 14.6213 14.1213C14.0587 14.6839 13.2956 15 12.5 15Z"
+                        stroke="#eeeeee" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <rect x="15.5" y="9" width="2" height="2" rx="1" transform="rotate(-90 15.5 9)" fill="#eeeeee">
+                    </rect>
+                    <rect x="16" y="8.5" width="1" height="1" rx="0.5" transform="rotate(-90 16 8.5)" stroke="#eeeeee"
+                        stroke-linecap="round"></rect>
+                </g>
+            </svg>@kimberskatepark
+        </div>
+        <div>
+            <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                stroke="#eeeeee">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path
+                        d="M20 12.05C19.9813 10.5255 19.5273 9.03809 18.6915 7.76295C17.8557 6.48781 16.673 5.47804 15.2826 4.85257C13.8921 4.2271 12.3519 4.01198 10.8433 4.23253C9.33473 4.45309 7.92057 5.10013 6.7674 6.09748C5.61422 7.09482 4.77005 8.40092 4.3343 9.86195C3.89856 11.323 3.88938 12.8781 4.30786 14.3442C4.72634 15.8103 5.55504 17.1262 6.69637 18.1371C7.83769 19.148 9.24412 19.8117 10.75 20.05V14.38H8.75001V12.05H10.75V10.28C10.7037 9.86846 10.7483 9.45175 10.8807 9.05931C11.0131 8.66687 11.23 8.30827 11.5161 8.00882C11.8022 7.70936 12.1505 7.47635 12.5365 7.32624C12.9225 7.17612 13.3368 7.11255 13.75 7.14003C14.3498 7.14824 14.9482 7.20173 15.54 7.30003V9.30003H14.54C14.3676 9.27828 14.1924 9.29556 14.0276 9.35059C13.8627 9.40562 13.7123 9.49699 13.5875 9.61795C13.4627 9.73891 13.3667 9.88637 13.3066 10.0494C13.2464 10.2125 13.2237 10.387 13.24 10.56V12.07H15.46L15.1 14.4H13.25V20C15.1399 19.7011 16.8601 18.7347 18.0985 17.2761C19.3369 15.8175 20.0115 13.9634 20 12.05Z"
+                        fill="#eeeeee"></path>
+                </g>
+            </svg>kimberskatepark
+        </div>
+	-->
+    </footer>
+
+    <div class="page">
+        <h2 style="text-align:center;">Welcome to Kimber Skatepark!</h2>
+        <div>We are a Wandsworth Council Youth Service!</div>
+        <div>
+            <div>This site is intended for ages 8-19 (up to 25 with SEND)</div>
+        </div>
+        <div>
+            Open hours:
+            <ul>
+                <li>3pm-6pm <i>school days</i></li>
+                <li>12pm-6pm <i>weekends and school holidays</i></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="page">
+        <h2>Safety Information</h2>
+        <div>
+            Kimber Skatepark strongly advises users to wear helmets!<br><br>
+            Helmets are available for hire for free - no deposit needed
+        </div>
+	<div>
+	    Ramps are dangerous when wet! Use at your own risk!
+	    We do not lend out hire bikes, scooters or skateboards
+	    when it is raining or wet!
+	</div>
+	<div>
+	    Any users under 8 years old MUST be supervised at all times.
+	</div>
+    </div>
+
+    <div class="page">
+	<h2>We have a website!</h2>
+	<div>
+	You can now check opening hours, closures and upcoming events at
+	the new Kimber Skatepark webpage!
+	</div>
+	<div>kimberskatepark.com</div>
+    </div>
+
+    <div class="page">
+	<h2>Skatepark Etiquette</h2>
+	<div>
+	    <b>Wait your turn!</b><br><br>Don't go when the way is not clear.
+	</div>
+	<div>
+	    <b>Follow the lines!</b><br><br>Don't ride in strange directions
+	    unless you know it is safe to do so. It is hard to
+	    for other users to predict where you are going and
+	    can cause accidents. If you are unsure what the expected routes
+	    are on the ramps, then watch the more experienced users to
+	    learn from them.
+	</div>
+	<div>
+	    <b>Look before you go!</b><br><br>Always check it is clear
+	    before you begin riding on the park.
+	</div>
+	<div>
+	    
+	</div>
+    </div>
+
+    <div class="page">
+        <h2>Skate Club</h2>
+        <div>Coached group session for ages 8-16</div>
+        <div>£5 per child</div>
+        <div><s>Saturdays 10am-noon</s></div>
+        <div><s>
+		(Weather permitting - please check our social media before travel)
+	</s></div>
+	<div>
+	Skate Club has stopped for Winter. It will resume in Spring 2025
+	when the weather improves. For updates check our facebook
+	page or our website.
+	</div>
+    </div>
+
+    <div class="page">
+        <h2>Duke of Edinburgh Award</h2>
+        <div>Kimber Skatepark now offers places for the
+            Duke of Edinburgh Award
+        </div>
+        <div>Available to members of Kimber Skatepark
+            from year 9 onwards
+        </div>
+        <div>Enquire with staff for more information
+        </div>
+        <div>Also available at other Wandsworth Youth Centres
+        </div>
+    </div>
+
+    <div class="page">
+	<h2>Level 2 Cycle Training Sessions</h2>
+	<div>Ages 10-15 years</div>
+	<div>
+	Bicycle training sessions will be running from Kimber
+	Skatepark throughout 2025 during school holidays.
+	</div>
+	<div>
+	For dates, and information on how to book, follow the link
+	on the schedule at kimberskatepark.com
+	</div>
+    </div>
+
+    <div class="page">
+	<h2>February Half Term</h2>
+	<div>Mon 17th - Fri 21st</div>
+	<div>Open 12 - 6pm everyday</div>
+	<h3>Schedule</h3>
+	<div>
+		<b>Mon</b> 1-3pm - Level One Bike Ability
+	</div>
+	<div>
+		<b>Tue & Wed</b> 2-4pm - Skate Coaching (weather permitting)
+	</div>
+	<div>
+		<b>Thu</b> 2-4pm - BMX coaching
+	</div>
+	<div>
+		<b>Fri</b> All Day - Mario Kart & Smash Bro's Tournament
+	</div>
+    </div>
+	
+    <script>
+        const pageList = document.querySelectorAll('.page');
+        const scrollSpeed = 20;
+	// debug speed
+	//const scrollSpeed = 3;
+        pageList[0].classList.add('show');
+
+        function pageScroll() {
+            function getCurrentPage() {
+                for (let i = 0; i < pageList.length; i++) {
+                    if (pageList[i].classList.contains('show')) {
+                        return i;
+                    }
+                }
+            }
+
+            let currentPage = getCurrentPage();
+            pageList[currentPage].classList.remove('show');
+            let nextPage = currentPage < pageList.length - 1 ? currentPage + 1 : 0;
+            pageList[nextPage].classList.add('show');
+        }
+
+        const scrollInterval = setInterval(pageScroll, scrollSpeed * 1000);
+
+    </script>
+</body>
+
+</html>
