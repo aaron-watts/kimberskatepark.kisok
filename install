@@ -1,0 +1,28 @@
+#!/usr/bin/bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+# create feh manager script
+echo "#!/usr/bin/bash
+
+feh ${SCRIPT_DIR}/pictures --fullscreen --slideshow-delay 20" > $SCRIPT_DIR/scripts/run-feh.sh
+
+# create chromium manager script
+echo "#!/usr/bin/bash
+
+chromium-browser --kiosk ${SCRIPT_DIR}/display/index.html" > $SCRIPT_DIR/scripts/run-chromium.sh
+
+# create display manager script
+echo "#!/usr/bin/bash
+
+${SCRIPT_DIR}/scripts/run-chromium.sh &
+sleep 1.5
+${SCRIPT_DIR}/scripts/run-feh.sh &" > $SCRIPT_DIR/scripts/run-display.sh
+
+# make scripts executable
+chmod +x scripts/run*.sh
+
+# Run at boot
+echo "[Desktop Entry]
+Name=kiosk
+Exec=${SCRIPT_DIR}/scripts/run_display.sh" > /etc/xdg/autostart/kimberdisplay.desktop
