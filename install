@@ -27,4 +27,4 @@ chmod +x scripts/run*.sh
 # Run at boot
 echo "[Desktop Entry]
 Name=kiosk
-Exec=${SCRIPT_DIR}/scripts/run_display.sh" > /etc/xdg/autostart/kimberdisplay.desktop
+Exec=${SCRIPT_DIR}/scripts/run-display.sh" > /etc/xdg/autostart/kimberdisplay.desktop
