@@ -12,6 +12,10 @@ First display runs feh for images in `pictures/`. Accepts image files including 
 
 Second display runs `display/index.html` through Chromium kiosk mode.
 
+### OpenDyslexic Font
+
+Uses open dyslexic font. Should be installed locally on machine.
+
 ## Installation
 
 In root directory run `sudo bash install`
